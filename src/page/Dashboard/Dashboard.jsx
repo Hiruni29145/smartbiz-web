@@ -65,7 +65,7 @@ const Dashboard = ({ onLogout }) => {
       sx={{ 
         display: "flex", 
         height: "100vh", 
-        overflow: "hidden" // 🚀 Prevents overall page scrolling
+        overflow: "hidden" 
       }}
     >
       {/* Sidebar */}
