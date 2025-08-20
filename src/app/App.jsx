@@ -4,14 +4,18 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Login from '../page/Login/Login'
 import Dashboard from '../page/Dashboard/Dashboard'
+import UserPage from '../page/UserPage/UserPage'
+
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-    {/* <Login/> */}
-    <Dashboard/>
+      {/* <Login/> */}
+      {/* <Dashboard/> */}
+     <UserPage/>
+      {/* <EmployeePage/> */}
     </>
   )
 }
