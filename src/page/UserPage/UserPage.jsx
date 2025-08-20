@@ -55,7 +55,7 @@ const UserPage = () => {
                 User Management
             </Typography>
 
-            {/* Actions */}
+            
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                 <TextField label="Search user..." size="small" />
                 <Button
@@ -68,10 +68,10 @@ const UserPage = () => {
                 </Button>
             </Box>
 
-            {/* Table */}
+            
             <UserTable users={users} onEdit={handleOpen} onDelete={handleDelete} />
 
-            {/* Modal */}
+           
             <UserFormModal
                 open={open}
                 handleClose={handleClose}
