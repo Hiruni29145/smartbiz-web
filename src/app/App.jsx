@@ -5,6 +5,7 @@ import './App.css'
 import Login from '../page/Login/Login'
 import Dashboard from '../page/Dashboard/Dashboard'
 import UserPage from '../page/UserPage/UserPage'
+import Home from '../page/Home/Home'
 
 
 function App() {
@@ -14,7 +15,8 @@ function App() {
     <>
       {/* <Login/> */}
       {/* <Dashboard/> */}
-     <UserPage/>
+     {/* <UserPage/> */}
+     <Home/>
       {/* <EmployeePage/> */}
     </>
   )
