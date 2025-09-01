@@ -7,6 +7,7 @@ import UserPage from "../page/UserPage/UserPage";
 import Business from "../page/Business/Business"; 
 import Employee from "../page/Employee/Employee";
 import Customer from "../page/Customer/Customer";
+import Suppliers from "../page/Supplier/Supplier";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="businesses" element={<Business />} /> 
           <Route path="employees" element={<Employee/>} />
           <Route path="customers" element={<Customer/>} />
+          <Route path="suppliers" element={<Suppliers/>} />
           <Route path="*" element={<Navigate to="home" replace />} />
         </Route>
       </Routes>
