@@ -1,6 +1,4 @@
-
-
-import { useState } from "react"
+import React from "react";
 import {
   Drawer,
   List,
@@ -13,8 +11,9 @@ import {
   useTheme,
   useMediaQuery,
   IconButton,
-} from "@mui/material"
+} from "@mui/material";
 import {
+  Home as HomeIcon,
   People,
   Business,
   Badge,
@@ -25,30 +24,32 @@ import {
   ShoppingCart,
   Assessment,
   Close,
-} from "@mui/icons-material"
+} from "@mui/icons-material";
+import { NavLink } from "react-router-dom";
 
+const drawerWidth = 280;
+
+// Explicit paths that match your app routes
 const navigationItems = [
-  { text: "Users", icon: People },
-  { text: "Businesses", icon: Business },
-  { text: "Employees", icon: Badge },
-  { text: "Customers", icon: Group },
-  { text: "Suppliers", icon: LocalShipping },
-  { text: "Categories", icon: Category },
-  { text: "Items", icon: Inventory },
-  { text: "Orders", icon: ShoppingCart },
-  { text: "Stock", icon: Assessment },
-]
+  { label: "Home", icon: HomeIcon, to: "/home" },
+  { label: "Users", icon: People, to: "/userpage" }, // matches <Route path="/userpage" />
+  { label: "Businesses", icon: Business, to: "/businesses" },
+  { label: "Employees", icon: Badge, to: "/employees" },
+  { label: "Customers", icon: Group, to: "/customers" },
+  { label: "Suppliers", icon: LocalShipping, to: "/suppliers" },
+  { label: "Categories", icon: Category, to: "/categories" },
+  { label: "Items", icon: Inventory, to: "/items" },
+  { label: "Orders", icon: ShoppingCart, to: "/orders" },
+  { label: "Stock", icon: Assessment, to: "/stock" },
+];
 
 const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"))
-  const [selectedItem, setSelectedItem] = useState("Users")
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const drawerWidth = 280
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen)
-  }
+  const closeMobile = () => {
+    if (isMobile) setMobileOpen(false);
+  };
 
   const drawer = (
     <Box
@@ -56,9 +57,9 @@ const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
         height: "100%",
         backgroundColor: "#164e63",
         color: "white",
-        overflow: "hidden",
         display: "flex",
         flexDirection: "column",
+        overflow: "hidden", // prevent scroll inside drawer content
       }}
     >
       {/* Header */}
@@ -73,17 +74,20 @@ const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
         }}
       >
         <Typography
+          component={NavLink}
+          to="/home"
           variant="h5"
           sx={{
             fontFamily: "var(--font-playfair)",
             fontWeight: 700,
             color: "white",
+            textDecoration: "none",
           }}
         >
           SmartBiz
         </Typography>
         {isMobile && (
-          <IconButton onClick={handleDrawerToggle} sx={{ color: "white" }}>
+          <IconButton onClick={closeMobile} sx={{ color: "white" }}>
             <Close />
           </IconButton>
         )}
@@ -92,53 +96,52 @@ const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
       {/* Navigation */}
       <List
         sx={{
-          px: 2,
-          py: 2,
-          overflow: "hidden",
           flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start",
+          overflow: "hidden", // no X/Y scroll in the list
         }}
       >
-        {navigationItems.map((item) => {
-          const Icon = item.icon
-          const isSelected = selectedItem === item.text
-
-          return (
-            <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
-              <ListItemButton
-                onClick={() => setSelectedItem(item.text)}
-                sx={{
-                  borderRadius: 2,
-                  py: 1.5,
-                  px: 2,
-                  backgroundColor: isSelected ? "rgba(255,255,255,0.1)" : "transparent",
-                  "&:hover": {
-                    backgroundColor: "rgba(255,255,255,0.08)",
-                    transform: "translateX(4px)",
-                  },
-                  transition: "all 0.3s ease",
+        {navigationItems.map(({ label, icon: Icon, to }) => (
+          <ListItem key={label} disablePadding sx={{ mb: 0.5 }}>
+            <ListItemButton
+              component={NavLink}
+              to={to}
+              onClick={closeMobile}
+              className={({ isActive }) => (isActive ? "active" : undefined)}
+              sx={{
+                borderRadius: 2,
+                py: 1.5,
+                px: 2,
+                color: "white",
+                "& .MuiListItemIcon-root": { color: "white" },
+                "&.active": {
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                  "& .MuiListItemText-primary": { fontWeight: 600 },
+                },
+                "&:hover": {
+                  backgroundColor: "rgba(255,255,255,0.08)",
+                  // remove translate to avoid horizontal overflow/scroll
+                  // transform: "translateX(4px)",
+                  pl: 2.5, // subtle nudge without causing overflow
+                },
+                transition: "background-color 0.3s ease, padding-left 0.3s ease",
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 40 }}>
+                <Icon />
+              </ListItemIcon>
+              <ListItemText
+                primary={label}
+                primaryTypographyProps={{
+                  fontFamily: "var(--font-source-sans)",
+                  fontSize: "0.95rem",
                 }}
-              >
-                <ListItemIcon sx={{ color: "white", minWidth: 40 }}>
-                  <Icon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.text}
-                  primaryTypographyProps={{
-                    fontFamily: "var(--font-source-sans)",
-                    fontWeight: isSelected ? 600 : 400,
-                    fontSize: "0.95rem",
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          )
-        })}
+              />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
     </Box>
-  )
+  );
 
   return (
     <Box component="nav" sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}>
@@ -146,11 +149,19 @@ const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
       <Drawer
         variant="temporary"
         open={mobileOpen}
-        onClose={handleDrawerToggle}
+        onClose={() => setMobileOpen(false)}
         ModalProps={{ keepMounted: true }}
-        sx={{
-          display: { xs: "block", md: "none" },
-          "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
+        sx={{ display: { xs: "block", md: "none" } }}
+        PaperProps={{
+          sx: {
+            boxSizing: "border-box",
+            width: drawerWidth,
+            border: "none",
+            overflow: "hidden",        // remove both X and Y scrollbars
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            "&::-webkit-scrollbar": { display: "none" },
+          },
         }}
       >
         {drawer}
@@ -159,20 +170,24 @@ const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
       {/* Desktop drawer */}
       <Drawer
         variant="permanent"
-        sx={{
-          display: { xs: "none", md: "block" },
-          "& .MuiDrawer-paper": {
+        open
+        sx={{ display: { xs: "none", md: "block" } }}
+        PaperProps={{
+          sx: {
             boxSizing: "border-box",
             width: drawerWidth,
             border: "none",
+            overflow: "hidden",        // remove both X and Y scrollbars
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            "&::-webkit-scrollbar": { display: "none" },
           },
         }}
-        open
       >
         {drawer}
       </Drawer>
     </Box>
-  )
-}
+  );
+};
 
-export default DashboardSidebar
+export default DashboardSidebar;
