@@ -5,6 +5,7 @@ import Dashboard from "../page/Dashboard/Dashboard";
 import Home from "../page/Home/Home";
 import UserPage from "../page/UserPage/UserPage";
 import Business from "../page/Business/Business"; 
+import Employee from "../page/Employee/Employee";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="home" element={<Home />} />
           <Route path="userpage" element={<UserPage />} />
           <Route path="businesses" element={<Business />} /> 
+          <Route path="employees" element={<Employee/>} />
           <Route path="*" element={<Navigate to="home" replace />} />
         </Route>
       </Routes>
