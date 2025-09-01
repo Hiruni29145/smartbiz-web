@@ -10,6 +10,7 @@ import Customer from "../page/Customer/Customer";
 import Suppliers from "../page/Supplier/Supplier";
 import Category from "../page/Categories/Categories";
 import Items from "../page/Items/Items";
+import Orders from "../page/Order/Order";
 
 
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="suppliers" element={<Suppliers/>} />
          <Route path="categories" element={<Category/>} />
           <Route path="items" element={<Items/>} />
+          <Route path="orders" element={<Orders/>} />
           <Route path="*" element={<Navigate to="home" replace />} />
         </Route>
       </Routes>
