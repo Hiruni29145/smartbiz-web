@@ -29,17 +29,18 @@ import { NavLink } from "react-router-dom";
 
 const drawerWidth = 240;
 
+
 const navigationItems = [
-  { label: "Home", icon: HomeIcon, to: "/home" },
-  { label: "Users", icon: People, to: "/userpage" },
-  { label: "Businesses", icon: Business, to: "/businesses" },
-  { label: "Employees", icon: Badge, to: "/employees" },
-  { label: "Customers", icon: Group, to: "/customers" },
-  { label: "Suppliers", icon: LocalShipping, to: "/suppliers" },
-  { label: "Categories", icon: Category, to: "/categories" },
-  { label: "Items", icon: Inventory, to: "/items" },
-  { label: "Orders", icon: ShoppingCart, to: "/orders" },
-  { label: "Stock", icon: Assessment, to: "/stock" }, // ✅ Stock now always visible
+  { label: "Home", icon: HomeIcon, to: "/dashboard/home" },
+  { label: "Users", icon: People, to: "/dashboard/userpage" },
+  { label: "Businesses", icon: Business, to: "/dashboard/businesses" },
+  { label: "Employees", icon: Badge, to: "/dashboard/employees" },
+  { label: "Customers", icon: Group, to: "/dashboard/customers" },
+  { label: "Suppliers", icon: LocalShipping, to: "/dashboard/suppliers" },
+  { label: "Categories", icon: Category, to: "/dashboard/categories" },
+  { label: "Items", icon: Inventory, to: "/dashboard/items" },
+  { label: "Orders", icon: ShoppingCart, to: "/dashboard/orders" },
+  { label: "Stock", icon: Assessment, to: "/dashboard/stock" },
 ];
 
 const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
@@ -73,7 +74,7 @@ const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
       >
         <Typography
           component={NavLink}
-          to="/home"
+          to="/dashboard/home"
           variant="h6"
           sx={{
             fontFamily: "var(--font-playfair)",
@@ -96,7 +97,7 @@ const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
       <List
         sx={{
           flex: 1,
-          overflowY: "hidden", // 🚀 no scrolling needed unless on very small screen
+          overflowY: "hidden",
           p: 0.5,
         }}
       >
@@ -106,12 +107,11 @@ const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
               component={NavLink}
               to={to}
               onClick={closeMobile}
-              className={({ isActive }) => (isActive ? "active" : undefined)}
               sx={{
                 borderRadius: 1.2,
-                py: 1.6, // smaller padding
+                py: 1.6,
                 px: 1.7,
-                minHeight: 50, // tighter row
+                minHeight: 50,
                 color: "white",
                 "& .MuiListItemIcon-root": { color: "white", minWidth: 32 },
                 "&.active": {
@@ -131,7 +131,7 @@ const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
                 primary={label}
                 primaryTypographyProps={{
                   fontFamily: "var(--font-source-sans)",
-                  fontSize: "0.92rem", // compact font
+                  fontSize: "0.92rem",
                 }}
               />
             </ListItemButton>
@@ -157,7 +157,7 @@ const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
         {drawer}
       </Drawer>
 
-      {/* Desktop drawer */}
+     
       <Drawer
         variant="permanent"
         open
