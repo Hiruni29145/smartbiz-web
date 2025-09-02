@@ -1,5 +1,6 @@
 import React from "react"
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import {
   Box,
   Card,
@@ -16,7 +17,9 @@ import {
 } from "@mui/material"
 import { Email, Lock, Visibility, VisibilityOff, Business } from "@mui/icons-material"
 
-const Login = () => {
+// IMPORTANT: Make sure your Login component accepts the onLogin prop
+const Login = ({ onLogin }) => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -49,14 +52,32 @@ const Login = () => {
     e.preventDefault()
     setIsLoading(true)
 
+    // Simulate API call
     setTimeout(() => {
       console.log("Login attempt:", formData)
+      
+      // Basic validation
+      if (!formData.email || !formData.password) {
+        alert("Please enter both email and password")
+        setIsLoading(false)
+        return
+      }
+
+      // IMPORTANT: Call the onLogin function passed from App.jsx
+      console.log("Calling onLogin with:", formData)
+      onLogin(formData)
+      
       setIsLoading(false)
     }, 2000)
   }
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
+  }
+
+  const handleRegisterClick = (e) => {
+    e.preventDefault()
+    navigate("/register")
   }
 
   return (
@@ -292,8 +313,8 @@ const Login = () => {
                 )}
               </Button>
 
-              {/* Forgot Password Link */}
-              <Box sx={{ textAlign: "center" }}>
+              {/* Links */}
+              <Box sx={{ textAlign: "center", marginBottom: 2 }}>
                 <Link
                   href="#"
                   variant="body2"
@@ -312,6 +333,36 @@ const Login = () => {
                 >
                   Forgot your password?
                 </Link>
+              </Box>
+
+              {/* Register Link */}
+              <Box sx={{ textAlign: "center" }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontFamily: "var(--font-inter)",
+                    fontSize: "0.9rem",
+                    color: "#64748b",
+                  }}
+                >
+                  Don't have an account?{" "}
+                  <Link
+                    href="#"
+                    onClick={handleRegisterClick}
+                    sx={{
+                      color: "#2563eb",
+                      textDecoration: "none",
+                      fontWeight: 500,
+                      "&:hover": {
+                        textDecoration: "underline",
+                        color: "#1d4ed8",
+                      },
+                      transition: "color 0.2s ease-in-out",
+                    }}
+                  >
+                    Sign up here
+                  </Link>
+                </Typography>
               </Box>
             </Box>
           </CardContent>
