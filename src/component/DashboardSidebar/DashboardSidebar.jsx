@@ -27,12 +27,11 @@ import {
 } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
 
-const drawerWidth = 280;
+const drawerWidth = 240;
 
-// Explicit paths that match your app routes
 const navigationItems = [
   { label: "Home", icon: HomeIcon, to: "/home" },
-  { label: "Users", icon: People, to: "/userpage" }, // matches <Route path="/userpage" />
+  { label: "Users", icon: People, to: "/userpage" },
   { label: "Businesses", icon: Business, to: "/businesses" },
   { label: "Employees", icon: Badge, to: "/employees" },
   { label: "Customers", icon: Group, to: "/customers" },
@@ -40,7 +39,7 @@ const navigationItems = [
   { label: "Categories", icon: Category, to: "/categories" },
   { label: "Items", icon: Inventory, to: "/items" },
   { label: "Orders", icon: ShoppingCart, to: "/orders" },
-  { label: "Stock", icon: Assessment, to: "/stock" },
+  { label: "Stock", icon: Assessment, to: "/stock" }, // ✅ Stock now always visible
 ];
 
 const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
@@ -59,13 +58,12 @@ const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
         color: "white",
         display: "flex",
         flexDirection: "column",
-        overflow: "hidden", // prevent scroll inside drawer content
       }}
     >
       {/* Header */}
       <Box
         sx={{
-          p: 3,
+          p: 1.5,
           borderBottom: "1px solid rgba(255,255,255,0.1)",
           display: "flex",
           alignItems: "center",
@@ -76,12 +74,13 @@ const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
         <Typography
           component={NavLink}
           to="/home"
-          variant="h5"
+          variant="h6"
           sx={{
             fontFamily: "var(--font-playfair)",
             fontWeight: 700,
             color: "white",
             textDecoration: "none",
+            fontSize: "1rem",
           }}
         >
           SmartBiz
@@ -97,43 +96,42 @@ const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
       <List
         sx={{
           flex: 1,
-          overflow: "hidden", // no X/Y scroll in the list
+          overflowY: "hidden", // 🚀 no scrolling needed unless on very small screen
+          p: 0.5,
         }}
       >
         {navigationItems.map(({ label, icon: Icon, to }) => (
-          <ListItem key={label} disablePadding sx={{ mb: 0.5 }}>
+          <ListItem key={label} disablePadding>
             <ListItemButton
               component={NavLink}
               to={to}
               onClick={closeMobile}
               className={({ isActive }) => (isActive ? "active" : undefined)}
               sx={{
-                borderRadius: 2,
-                py: 1.5,
-                px: 2,
+                borderRadius: 1.2,
+                py: 1.6, // smaller padding
+                px: 1.7,
+                minHeight: 50, // tighter row
                 color: "white",
-                "& .MuiListItemIcon-root": { color: "white" },
+                "& .MuiListItemIcon-root": { color: "white", minWidth: 32 },
                 "&.active": {
-                  backgroundColor: "rgba(255,255,255,0.1)",
-                  "& .MuiListItemText-primary": { fontWeight: 600 },
+                  backgroundColor: "rgba(255,255,255,0.15)",
+                  "& .MuiListItemText-primary": { fontWeight: 800 },
                 },
                 "&:hover": {
                   backgroundColor: "rgba(255,255,255,0.08)",
-                  // remove translate to avoid horizontal overflow/scroll
-                  // transform: "translateX(4px)",
-                  pl: 2.5, // subtle nudge without causing overflow
+                  pl: 2,
                 },
-                transition: "background-color 0.3s ease, padding-left 0.3s ease",
               }}
             >
-              <ListItemIcon sx={{ minWidth: 40 }}>
-                <Icon />
+              <ListItemIcon>
+                <Icon fontSize="small" />
               </ListItemIcon>
               <ListItemText
                 primary={label}
                 primaryTypographyProps={{
                   fontFamily: "var(--font-source-sans)",
-                  fontSize: "0.95rem",
+                  fontSize: "0.92rem", // compact font
                 }}
               />
             </ListItemButton>
@@ -153,15 +151,7 @@ const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
         ModalProps={{ keepMounted: true }}
         sx={{ display: { xs: "block", md: "none" } }}
         PaperProps={{
-          sx: {
-            boxSizing: "border-box",
-            width: drawerWidth,
-            border: "none",
-            overflow: "hidden",        // remove both X and Y scrollbars
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            "&::-webkit-scrollbar": { display: "none" },
-          },
+          sx: { boxSizing: "border-box", width: drawerWidth, border: "none" },
         }}
       >
         {drawer}
@@ -173,15 +163,7 @@ const DashboardSidebar = ({ mobileOpen, setMobileOpen }) => {
         open
         sx={{ display: { xs: "none", md: "block" } }}
         PaperProps={{
-          sx: {
-            boxSizing: "border-box",
-            width: drawerWidth,
-            border: "none",
-            overflow: "hidden",        // remove both X and Y scrollbars
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            "&::-webkit-scrollbar": { display: "none" },
-          },
+          sx: { boxSizing: "border-box", width: drawerWidth, border: "none" },
         }}
       >
         {drawer}
